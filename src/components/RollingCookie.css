@@ -1,0 +1,70 @@
+
+.rolling-cookie-track {
+  position: fixed;
+  left: 0;
+  bottom: 12px;
+  width: 100%;
+  height: 105px;
+  z-index: 9999;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.rolling-cookie {
+  position: absolute;
+  left: -100px;
+  bottom: 5px;
+  width: 85px;
+  height: 85px;
+  animation: cookie-roll-across 10s linear infinite;
+  will-change: transform;
+}
+
+.cookie-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 4px 5px rgba(46, 32, 24, 0.25));
+  animation: cookie-spin 1s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes cookie-roll-across {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(100vw + 140px));
+  }
+}
+
+@keyframes cookie-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 600px) {
+  .rolling-cookie-track {
+    height: 80px;
+  }
+
+  .rolling-cookie {
+    width: 65px;
+    height: 65px;
+    left: -75px;
+    bottom: 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rolling-cookie-track {
+    display: none;
+  }
+}

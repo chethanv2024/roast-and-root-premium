@@ -1,0 +1,332 @@
+
+/* =========================================================
+   ROAST & ROOT — INTERACTIVE MOTION SYSTEM
+   Works with the existing cream / caramel / espresso theme.
+   ========================================================= */
+
+:root {
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-fast: 220ms;
+  --motion-medium: 480ms;
+}
+
+/* Scroll reveal */
+
+.motion-ready {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition:
+    opacity 650ms var(--motion-ease),
+    transform 750ms var(--motion-ease);
+  will-change: opacity, transform;
+}
+
+.motion-ready.motion-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
+}
+
+/* Stagger cards as they enter the viewport */
+
+.product-grid > .motion-ready:nth-child(2),
+.shop-grid > .motion-ready:nth-child(2),
+.journal-grid > .motion-ready:nth-child(2) {
+  transition-delay: 70ms;
+}
+
+.product-grid > .motion-ready:nth-child(3),
+.shop-grid > .motion-ready:nth-child(3),
+.journal-grid > .motion-ready:nth-child(3) {
+  transition-delay: 140ms;
+}
+
+.product-grid > .motion-ready:nth-child(4),
+.shop-grid > .motion-ready:nth-child(4),
+.journal-grid > .motion-ready:nth-child(4) {
+  transition-delay: 210ms;
+}
+
+.product-grid > .motion-ready:nth-child(5),
+.shop-grid > .motion-ready:nth-child(5),
+.journal-grid > .motion-ready:nth-child(5) {
+  transition-delay: 280ms;
+}
+
+/* Product and journal cards */
+
+.motion-interactive {
+  transform-origin: center bottom;
+  transition:
+    transform 380ms var(--motion-ease),
+    box-shadow 380ms var(--motion-ease),
+    border-color 300ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .product-card.motion-interactive:hover,
+  .journal-card.motion-interactive:hover {
+    transform: translateY(-7px);
+  }
+
+  .product-card.motion-interactive:hover .product-image-wrap img,
+  .journal-card.motion-interactive:hover .journal-image img {
+    transform: scale(1.075);
+  }
+}
+
+/* Image movement and polished overlay */
+
+.product-image-wrap,
+.journal-image {
+  isolation: isolate;
+}
+
+.product-image-wrap img,
+.journal-image img {
+  transition:
+    transform 850ms var(--motion-ease),
+    filter 600ms ease;
+}
+
+.product-image-wrap::after,
+.journal-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    transparent 25%,
+    rgba(255, 248, 235, 0.22) 48%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  transition: transform 850ms var(--motion-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .product-image-wrap:hover::after,
+  .journal-image:hover::after {
+    transform: translateX(120%);
+  }
+
+  .product-image-wrap:hover img,
+  .journal-image:hover img {
+    filter: saturate(1);
+  }
+}
+
+/* Buttons — use existing button styles and colors */
+
+button,
+.button,
+.btn,
+.add-to-cart,
+.product-buy button {
+  transition:
+    transform 220ms var(--motion-ease),
+    box-shadow 250ms ease,
+    background-color 250ms ease,
+    color 250ms ease,
+    border-color 250ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button:hover,
+  .button:hover,
+  .btn:hover,
+  .add-to-cart:hover,
+  .product-buy button:hover {
+    transform: translateY(-2px);
+  }
+}
+
+button:active,
+.button:active,
+.btn:active,
+.add-to-cart:active,
+.product-buy button:active {
+  transform: scale(0.97);
+}
+
+/* Keyboard accessibility */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--caramel, #c08a59);
+  outline-offset: 4px;
+}
+
+/* Navigation */
+
+.navbar a,
+.nav-links a,
+.nav-link {
+  position: relative;
+}
+
+.navbar a::after,
+.nav-links a::after,
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -5px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 300ms var(--motion-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .navbar a:hover::after,
+  .nav-links a:hover::after,
+  .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+.navbar a.active::after,
+.nav-links a.active::after,
+.nav-link.active::after,
+.navbar a[aria-current="page"]::after,
+.nav-links a[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+/* Contact forms */
+
+.contact-form input,
+.contact-form textarea,
+.contact-form select,
+.newsletter input {
+  transition:
+    border-color 250ms ease,
+    box-shadow 250ms ease,
+    background-color 250ms ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus,
+.contact-form select:focus,
+.newsletter input:focus {
+  border-color: var(--caramel, #c08a59);
+  box-shadow: 0 0 0 4px rgba(192, 138, 89, 0.13);
+}
+
+/* Quantity controls and cart rows */
+
+.cart-item {
+  transition:
+    background-color 250ms ease,
+    border-color 250ms ease;
+}
+
+.cart-item-controls button,
+.mini-quantity button,
+.quantity-row button {
+  transition:
+    transform 200ms var(--motion-ease),
+    background-color 200ms ease,
+    border-color 200ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cart-item-controls button:hover,
+  .mini-quantity button:hover,
+  .quantity-row button:hover {
+    transform: scale(1.1);
+    border-color: var(--caramel, #c08a59);
+  }
+}
+
+/* Story and editorial imagery */
+
+.manifesto-image,
+.ritual-collage,
+.detail-image {
+  overflow: hidden;
+}
+
+.manifesto-image img,
+.ritual-collage img,
+.detail-image img {
+  transition: transform 900ms var(--motion-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .manifesto-image:hover img,
+  .ritual-collage:hover img,
+  .detail-image:hover img {
+    transform: scale(1.035);
+  }
+}
+
+/* Footer links */
+
+.footer-col a {
+  transition:
+    color 220ms ease,
+    transform 220ms var(--motion-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .footer-col a:hover {
+    transform: translateX(4px);
+  }
+}
+
+/* Smooth anchor navigation */
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Small screen safety */
+
+@media (max-width: 720px) {
+  .motion-ready {
+    transform: translate3d(0, 16px, 0);
+  }
+
+  .product-card.motion-interactive:hover,
+  .journal-card.motion-interactive:hover {
+    transform: none;
+  }
+}
+
+/* Respect accessibility settings */
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-ready,
+  .motion-ready.motion-visible,
+  .motion-interactive,
+  button,
+  a,
+  img,
+  input,
+  textarea,
+  select {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+    transform: none !important;
+    will-change: auto !important;
+  }
+
+  .motion-ready {
+    opacity: 1 !important;
+  }
+
+  .product-image-wrap::after,
+  .journal-image::after {
+    display: none !important;
+  }
+}
